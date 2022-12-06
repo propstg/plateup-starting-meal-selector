@@ -34,17 +34,20 @@
     <Reference Include="0Harmony">
       <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\..\OvercookedPatience\Libraries\BepInEx.dll</HintPath>
-    </Reference>
     <Reference Include="Kitchen.Common">
       <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Kitchen.Common.dll</HintPath>
     </Reference>
     <Reference Include="Kitchen.GameData">
       <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Kitchen.GameData.dll</HintPath>
     </Reference>
+    <Reference Include="KitchenLib-Workshop">
+      <HintPath>..\KitchenLib-Workshop.dll</HintPath>
+    </Reference>
     <Reference Include="KitchenMode">
       <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\KitchenMode.dll</HintPath>
+    </Reference>
+    <Reference Include="KitchenMods">
+      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\KitchenMods.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
       <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Sirenix.Serialization.dll</HintPath>

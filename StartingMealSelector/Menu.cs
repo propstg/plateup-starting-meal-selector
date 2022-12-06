@@ -2,13 +2,11 @@
 using Kitchen.Modules;
 using Kitchen;
 using System.Collections.Generic;
-using HarmonyLib;
-using BepInEx.Logging;
-using System.Reflection;
+using KitchenLib;
 
 namespace KitchenStartingMealSelector {
 
-    public class StartingMealSelectorMenu : Menu<PauseMenuAction> {
+    public class StartingMealSelectorMenu<T> : KLMenu<T> {
 
         private static readonly Dictionary<int, string> allOptions = new Dictionary<int, string>() {
             {-2075899, "Breakfast"},
@@ -45,33 +43,6 @@ namespace KitchenStartingMealSelector {
             New<SpacerElement>();
 
             AddButton(Localisation["MENU_BACK_SETTINGS"], delegate { RequestPreviousMenu(); });
-        }
-    }
-
-    [HarmonyPatch(typeof(MainMenu), "Setup")]
-    class MainMenu_Patch {
-
-        private static ManualLogSource log = BepInEx.Logging.Logger.CreateLogSource($"{Mod.MOD_NAME} MainMenu_Patch");
-
-        public static bool Prefix(MainMenu __instance) {
-            log.LogInfo("In main menu patch");
-            MethodInfo addSubmenu = __instance.GetType().GetMethod("AddSubmenuButton", BindingFlags.NonPublic | BindingFlags.Instance);
-            addSubmenu.Invoke(__instance, new object[] { Mod.MOD_NAME, typeof(StartingMealSelectorMenu), false });
-            return true;
-        }
-    }
-
-    [HarmonyPatch(typeof(PlayerPauseView), "SetupMenus")]
-    class PauseMenu_Patch {
-
-        private static ManualLogSource log = BepInEx.Logging.Logger.CreateLogSource($"{Mod.MOD_NAME} PauseMenu_Patch");
-
-        public static bool Prefix(PlayerPauseView __instance) {
-            log.LogInfo("In pause menu patch");
-            ModuleList moduleList = (ModuleList)__instance.GetType().GetField("ModuleList", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(__instance);
-            MethodInfo addMenu = __instance.GetType().GetMethod("AddMenu", BindingFlags.NonPublic | BindingFlags.Instance);
-            addMenu.Invoke(__instance, new object[] { typeof(StartingMealSelectorMenu), new StartingMealSelectorMenu(__instance.ButtonContainer, moduleList) });
-            return true;
         }
     }
 }
