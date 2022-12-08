@@ -18,7 +18,7 @@ namespace KitchenStartingMealSelector {
         public static int selectedStartingDish = 0;
         public static List<int> loadedAvailableMenuOptions = null;
 
-        public Mod() : base(MOD_NAME, "0.0.2", "1.1.2", Assembly.GetExecutingAssembly()) {
+        public Mod() : base(MOD_ID, MOD_NAME, "blargle", MOD_VERSION, "1.1.2", Assembly.GetExecutingAssembly()) {
             Debug.Log($"Mod loaded: {MOD_ID} {MOD_VERSION}");
             initMainMenu();
             initPauseMenu();
