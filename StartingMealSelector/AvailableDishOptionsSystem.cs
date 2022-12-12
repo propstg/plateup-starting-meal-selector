@@ -12,7 +12,7 @@ namespace KitchenStartingMealSelector {
         protected override void Initialise() {
             base.Initialise();
             dishUpgradesQuery = GetEntityQuery((ComponentType)typeof(CDishUpgrade));
-            Debug.LogWarning($"{Mod.MOD_ID}: AvailableDishOptionsSystem initialized.");
+            Debug.Log($"{Mod.MOD_ID}: AvailableDishOptionsSystem initialized.");
         }
 
         protected override void OnUpdate() {
