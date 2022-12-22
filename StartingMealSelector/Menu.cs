@@ -3,22 +3,12 @@ using Kitchen.Modules;
 using Kitchen;
 using System.Collections.Generic;
 using KitchenLib;
+using KitchenLib.Utils;
+using KitchenData;
 
 namespace KitchenStartingMealSelector {
 
     public class StartingMealSelectorMenu<T> : KLMenu<T> {
-
-        private static readonly Dictionary<int, string> allOptions = new Dictionary<int, string>() {
-            {-2075899, "Breakfast"},
-            {-1778969928, "Burgers"},
-            {1626323920, "Hotdogs"},
-            {1743900205, "Fish"},
-            {-133939790, "Pie"},
-            {1356267749, "Salad"},
-            {-959076098, "Steak"},
-            {-1653221873, "Stir Fry"},
-            {550743424, "Pizza"}
-        };
 
         public StartingMealSelectorMenu(Transform container, ModuleList module_list) : base(container, module_list) { }
 
@@ -26,10 +16,14 @@ namespace KitchenStartingMealSelector {
             List<int> dishValues = new List<int>();
             List<string> dishLabels = new List<string>();
 
-            foreach (var entry in allOptions) {
-                if (Mod.loadedAvailableMenuOptions.Contains(entry.Key)) {
-                    dishValues.Add(entry.Key);
-                    dishLabels.Add(entry.Value);
+            foreach (var id in Mod.loadedAvailableMenuOptions) {
+                dishValues.Add(id);
+                GameDataObject gameDataObject = GDOUtils.GetExistingGDO(id);
+                if (gameDataObject != null && gameDataObject.name != null) {
+                    string[] name = gameDataObject.name.Split(' ');
+                    dishLabels.Add(name[0]);
+                } else {
+                    dishLabels.Add("" + id);
                 }
             }
 

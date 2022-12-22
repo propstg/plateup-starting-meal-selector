@@ -25,7 +25,7 @@ namespace KitchenStartingMealSelector {
                 .ToList<CDishUpgrade>()
                 .Select(item => item.DishID).ToList();
 
-            Debug.LogWarning($"Found dish upgrades: {Mod.loadedAvailableMenuOptions.Select(item => item.ToString())}");
+            Debug.LogWarning($"Found dish upgrades: {string.Join(", ", Mod.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
         }
     }
 }
