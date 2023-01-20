@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using Kitchen;
+﻿using Kitchen;
 using KitchenLib;
 using KitchenLib.Event;
 using System;
@@ -13,44 +12,25 @@ namespace KitchenStartingMealSelector {
 
         public const string MOD_ID = "blargle.StartingMealSelector";
         public const string MOD_NAME = "Starting Meal Selector";
-        public const string MOD_VERSION = "0.0.3";
+        public const string MOD_VERSION = "0.0.5";
 
         public static bool isRegistered = false;
         public static int selectedStartingDish = 0;
         public static List<int> loadedAvailableMenuOptions = null;
 
-        public Mod() : base(MOD_ID, MOD_NAME, "blargle", MOD_VERSION, "1.1.2", Assembly.GetExecutingAssembly()) { }
+        public Mod() : base(MOD_ID, MOD_NAME, "blargle", MOD_VERSION, "1.1.3", Assembly.GetExecutingAssembly()) { }
 
         protected override void Initialise() {
             base.Initialise();
             if (!isRegistered) {
-                Debug.Log($"{MOD_ID} v{MOD_VERSION}: initialized");
-                initMainMenu();
+                Debug.Log($"[{MOD_ID}] v{MOD_VERSION} initialized");
                 initPauseMenu();
                 isRegistered = true;
-            } else {
-                Debug.Log($"{MOD_ID} v{MOD_VERSION}: skipping re-creating menus");
             }
         }
 
-        protected override void OnUpdate() {
-        }
-
-        private void initMainMenu() {
-            Events.PreferenceMenu_MainMenu_SetupEvent += (s, args) => {
-                Type type = args.instance.GetType().GetGenericArguments()[0];
-                args.mInfo.Invoke(args.instance, new object[] { MOD_NAME, typeof(StartingMealSelectorMenu<>).MakeGenericType(type), false });
-            };
-            Events.PreferenceMenu_MainMenu_CreateSubmenusEvent += (s, args) => {
-                args.Menus.Add(typeof(StartingMealSelectorMenu<MainMenuAction>), new StartingMealSelectorMenu<MainMenuAction>(args.Container, args.Module_list));
-            };
-        }
-
         private void initPauseMenu() {
-            Events.PreferenceMenu_PauseMenu_SetupEvent += (s, args) => {
-                Type type = args.instance.GetType().GetGenericArguments()[0];
-                args.mInfo.Invoke(args.instance, new object[] { MOD_NAME, typeof(StartingMealSelectorMenu<>).MakeGenericType(type), false });
-            };
+            ModsPreferencesMenu<PauseMenuAction>.RegisterMenu(MOD_NAME, typeof(StartingMealSelectorMenu<PauseMenuAction>), typeof(PauseMenuAction));
             Events.PreferenceMenu_PauseMenu_CreateSubmenusEvent += (s, args) => {
                 args.Menus.Add(typeof(StartingMealSelectorMenu<PauseMenuAction>), new StartingMealSelectorMenu<PauseMenuAction>(args.Container, args.Module_list));
             };

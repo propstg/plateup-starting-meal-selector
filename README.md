@@ -10,8 +10,12 @@ Note:  This will only show the recipes that you have unlocked.
 
 ## Requirements
 
-* BepinEx >= 5.4.21
+* KitchenLib
+* Harmony
 
 ## Installation
 
-* Download StartingMealSelector.dll and add to your `PlateUp/BenInEx/plugins` folder.
+* Install through the [Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2898176672)
+
+## Acknowledgments
+* Suggestion from Pimpin'Yuu

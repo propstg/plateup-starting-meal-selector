@@ -12,7 +12,7 @@ namespace KitchenStartingMealSelector {
         protected override void Initialise() {
             base.Initialise();
             dishUpgradesQuery = GetEntityQuery((ComponentType)typeof(CDishUpgrade));
-            Debug.Log($"{Mod.MOD_ID}: AvailableDishOptionsSystem initialized.");
+            Debug.Log($"[{Mod.MOD_ID}] AvailableDishOptionsSystem initialized.");
         }
 
         protected override void OnUpdate() {
@@ -25,7 +25,7 @@ namespace KitchenStartingMealSelector {
                 .ToList<CDishUpgrade>()
                 .Select(item => item.DishID).ToList();
 
-            Debug.LogWarning($"Found dish upgrades: {string.Join(", ", Mod.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
+            Debug.LogWarning($"[{Mod.MOD_ID}] Found dish upgrades: {string.Join(", ", Mod.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
         }
     }
 }
