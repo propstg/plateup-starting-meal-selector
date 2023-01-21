@@ -19,6 +19,10 @@ namespace KitchenStartingMealSelector {
 
         protected override void OnUpdate()
 		{
+			Mod.loadedAvailableMenuOptions.Clear();
+			Mod.loadedAvailableMenuOptionNames.Clear();
+
+
 			Mod.loadedAvailableMenuOptions.Add(0);
 			Mod.loadedAvailableMenuOptionNames.Add("Random");
 
