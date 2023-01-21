@@ -1,7 +1,6 @@
 ﻿using Kitchen;
 using KitchenLib;
 using KitchenLib.Event;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace KitchenStartingMealSelector {
 
         public const string MOD_ID = "blargle.StartingMealSelector";
         public const string MOD_NAME = "Starting Meal Selector";
-        public const string MOD_VERSION = "0.0.5";
+        public const string MOD_VERSION = "0.0.6";
 
         public static bool isRegistered = false;
         public static int selectedStartingDish = 0;

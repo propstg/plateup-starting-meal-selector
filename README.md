@@ -19,3 +19,4 @@ Note:  This will only show the recipes that you have unlocked.
 
 ## Acknowledgments
 * Suggestion from Pimpin'Yuu
+* StarFluxGames for helping with modded dish and future proofing support :D
