@@ -25,6 +25,15 @@ namespace KitchenStartingMealSelector {
 
 			Mod.loadedAvailableMenuOptions.Add(0);
 			Mod.loadedAvailableMenuOptionNames.Add("Random");
+			
+			Dish dishx = (Dish)GDOUtils.GetExistingGDO(AssetReference.AlwaysAvailableDish);
+			Mod.loadedAvailableMenuOptions.Add(AssetReference.AlwaysAvailableDish);
+			if (dishx == null)
+				dishx = (Dish)GDOUtils.GetCustomGameDataObject(AssetReference.AlwaysAvailableDish).GameDataObject;
+			if (dishx != null)
+				Mod.loadedAvailableMenuOptionNames.Add(dishx.Name);
+			else
+				Mod.loadedAvailableMenuOptionNames.Add(AssetReference.AlwaysAvailableDish.ToString());
 
 			foreach (int dishID in dishUpgradesQuery
 				.ToComponentDataArray<CDishUpgrade>(Unity.Collections.Allocator.Temp)
