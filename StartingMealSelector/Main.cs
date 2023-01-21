@@ -16,7 +16,8 @@ namespace KitchenStartingMealSelector {
 
         public static bool isRegistered = false;
         public static int selectedStartingDish = 0;
-        public static List<int> loadedAvailableMenuOptions = null;
+        public static List<int> loadedAvailableMenuOptions = new List<int>();
+        public static List<string> loadedAvailableMenuOptionNames = new List<string>();
 
         public Mod() : base(MOD_ID, MOD_NAME, "blargle", MOD_VERSION, "1.1.3", Assembly.GetExecutingAssembly()) { }
 
