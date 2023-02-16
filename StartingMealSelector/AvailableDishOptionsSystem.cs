@@ -22,9 +22,8 @@ namespace KitchenStartingMealSelector {
             Mod.loadedAvailableMenuOptions.Clear();
             Mod.loadedAvailableMenuOptionNames.Clear();
 
+            addIdNamePair(-1, "Surprise me");
             addIdNamePair(0, "Random");
-            addIdNamePair(DishReferences.Dumplings, "Dumplings");
-            addSushiIfExists();
             addAlwaysAvailableOption();
             addOptionsThatUserHasUnlocked();
             addIdNamePair(DishReferences.NutRoastBase, "Nut Roast");
@@ -35,13 +34,6 @@ namespace KitchenStartingMealSelector {
         private void addIdNamePair(int id, string name) {
             Mod.loadedAvailableMenuOptions.Add(id);
             Mod.loadedAvailableMenuOptionNames.Add(name);
-        }
-
-        private void addSushiIfExists() {
-            int sushiId = -1691812531;
-            if (GDOUtils.GetCustomGameDataObject(sushiId) != null) {
-                addIdNamePair(sushiId, "Sushi");
-            }
         }
 
         private void addAlwaysAvailableOption() {

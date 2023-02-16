@@ -11,22 +11,18 @@ namespace KitchenStartingMealSelector {
 
         public const string MOD_ID = "blargle.StartingMealSelector";
         public const string MOD_NAME = "Starting Meal Selector";
-        public const string MOD_VERSION = "0.0.6";
+        public const string MOD_VERSION = "0.0.7";
 
-        public static bool isRegistered = false;
         public static int selectedStartingDish = 0;
+        public static bool randomizeOnce = false;
         public static List<int> loadedAvailableMenuOptions = new List<int>();
         public static List<string> loadedAvailableMenuOptionNames = new List<string>();
 
-        public Mod() : base(MOD_ID, MOD_NAME, "blargle", MOD_VERSION, "1.1.3", Assembly.GetExecutingAssembly()) { }
+        public Mod() : base(MOD_ID, MOD_NAME, "blargle", MOD_VERSION, "1.1.4", Assembly.GetExecutingAssembly()) { }
 
-        protected override void Initialise() {
-            base.Initialise();
-            if (!isRegistered) {
-                Debug.Log($"[{MOD_ID}] v{MOD_VERSION} initialized");
-                initPauseMenu();
-                isRegistered = true;
-            }
+        protected override void OnInitialise() {
+            Debug.Log($"[{MOD_ID}] v{MOD_VERSION} initialized");
+            initPauseMenu();
         }
 
         private void initPauseMenu() {
