@@ -11,10 +11,11 @@ namespace KitchenStartingMealSelector {
 
         public const string MOD_ID = "blargle.StartingMealSelector";
         public const string MOD_NAME = "Starting Meal Selector";
-        public const string MOD_VERSION = "0.0.7";
+        public const string MOD_VERSION = "0.0.8";
 
         public static int selectedStartingDish = 0;
         public static bool randomizeOnce = false;
+        public static bool refreshOptions = false;
         public static List<int> loadedAvailableMenuOptions = new List<int>();
         public static List<string> loadedAvailableMenuOptionNames = new List<string>();
 

@@ -5,10 +5,12 @@ using Unity.Entities;
 using UnityEngine;
 using KitchenLib.Utils;
 using KitchenLib.References;
+using UnityEngine.Rendering.Universal.Internal;
+using System;
 
 namespace KitchenStartingMealSelector {
 
-    public class AvailableDishOptionsSystem : FranchiseFirstFrameSystem {
+    public class AvailableDishOptionsSystem : GameSystemBase {
 
         private EntityQuery dishUpgradesQuery;
 
@@ -19,6 +21,12 @@ namespace KitchenStartingMealSelector {
         }
 
         protected override void OnUpdate() {
+            if (!(Has<CSceneFirstFrame>() || Mod.refreshOptions)) {
+                return;
+            }
+
+            Debug.LogWarning($"[{Mod.MOD_ID}] Loading dish upgrades...");
+
             Mod.loadedAvailableMenuOptions.Clear();
             Mod.loadedAvailableMenuOptionNames.Clear();
 
@@ -29,6 +37,7 @@ namespace KitchenStartingMealSelector {
             addIdNamePair(DishReferences.NutRoastBase, "Nut Roast");
             
             Debug.LogWarning($"[{Mod.MOD_ID}] Found dish upgrades: {string.Join(", ", Mod.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
+            Mod.refreshOptions = false;
         }
 
         private void addIdNamePair(int id, string name) {

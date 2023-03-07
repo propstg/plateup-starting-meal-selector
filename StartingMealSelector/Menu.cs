@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using Kitchen.Modules;
 using Kitchen;
-using System.Collections.Generic;
 using KitchenLib;
-using KitchenLib.Utils;
-using KitchenData;
 
 namespace KitchenStartingMealSelector {
 
@@ -28,6 +25,12 @@ namespace KitchenStartingMealSelector {
 
             New<SpacerElement>();
             AddInfo("This menu only shows options that you have unlocked and is not currently intended to unlock meals.");
+
+            AddButton("Refresh Options", delegate {
+                Mod.selectedStartingDish = 0;
+                Mod.refreshOptions = true;
+                RequestPreviousMenu();
+            });
 
             New<SpacerElement>();
             New<SpacerElement>();
