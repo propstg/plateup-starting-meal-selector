@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="AvailableDishOptionsSystem.cs" />
     <Compile Include="DoNotOverwhelmTheFranchiseKitchenSystem.cs" />
+    <Compile Include="IndividualMealRerollSystem.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="DishPaperOverrideSystem.cs" />
