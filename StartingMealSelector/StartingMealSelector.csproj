@@ -33,49 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Kitchen.Common">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Kitchen.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.FranchiseMode">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Kitchen.FranchiseMode.dll</HintPath>
-    </Reference>
-    <Reference Include="Kitchen.GameData">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Kitchen.GameData.dll</HintPath>
-    </Reference>
-    <Reference Include="KitchenLib-Workshop, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\Steam\steamapps\workshop\content\1599600\2898069883\KitchenLib-Workshop.dll</HintPath>
-    </Reference>
-    <Reference Include="KitchenMode">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\KitchenMode.dll</HintPath>
-    </Reference>
-    <Reference Include="KitchenMods">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\KitchenMods.dll</HintPath>
-    </Reference>
-    <Reference Include="Sirenix.Serialization">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Sirenix.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Unity.Entities">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\Unity.Entities.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>E:\Steam\steamapps\common\PlateUp\PlateUp\PlateUp_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="AvailableDishOptionsSystem.cs" />
-    <Compile Include="DoNotOverwhelmTheFranchiseKitchenSystem.cs" />
+    <Compile Include="CStartingMealSelectorDish.cs" />
+    <Compile Include="DoNotOverwhelmTheFranchiseKitchenSystem - Copy.cs" />
+    <Compile Include="DestroySmsDishWhenHeldSystem.cs" />
     <Compile Include="IndividualMealRerollSystem.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Main.cs" />
@@ -86,11 +47,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Yariazen.PlateUp.ModBuildUtilities.1.6.16\build\Yariazen.PlateUp.ModBuildUtilities.targets" Condition="Exists('..\packages\Yariazen.PlateUp.ModBuildUtilities.1.6.16\build\Yariazen.PlateUp.ModBuildUtilities.targets')" />
+  <Import Project="..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets" Condition="Exists('..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Yariazen.PlateUp.ModBuildUtilities.1.6.16\build\Yariazen.PlateUp.ModBuildUtilities.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Yariazen.PlateUp.ModBuildUtilities.1.6.16\build\Yariazen.PlateUp.ModBuildUtilities.targets'))" />
+    <Error Condition="!Exists('..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets'))" />
   </Target>
 </Project>

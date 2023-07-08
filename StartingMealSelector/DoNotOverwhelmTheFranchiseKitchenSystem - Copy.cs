@@ -16,7 +16,7 @@ namespace KitchenStartingMealSelector {
         }
 
         protected override void OnUpdate() {
-            if (Mod.selectedStartingDish == -1) {
+            if (Main.selectedStartingDish == -1) {
                 EntityManager.DestroyEntity(rebuildRequests);
             }
         }

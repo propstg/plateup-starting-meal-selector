@@ -14,16 +14,17 @@ namespace KitchenStartingMealSelector {
         protected override bool IsPossible(ref InteractionData data) {
             return Require<CItemHolder>(data.Target, out itemHolder) &&
                 itemHolder.HeldItem != default &&
-                Require<CDishChoice>(itemHolder.HeldItem, out dishChoice);
+                Require<CDishChoice>(itemHolder.HeldItem, out dishChoice) &&
+                dishChoice.Reason == FixedDishReason.None;
         }
 
         protected override void Perform(ref InteractionData data) {
-            Mod.randomizeOnce = false;
-            Mod.selectedStartingDish = 0;
+            Main.randomizeOnce = false;
+            Main.selectedStartingDish = 0;
             
-            Debug.Log($"[{Mod.MOD_ID}] Rerolling individual dish. Current: {dishChoice.Dish}");
-            dishChoice.Dish = Mod.loadedAvailableMenuOptions[Random.Range(2, Mod.loadedAvailableMenuOptions.Count)];
-            Debug.Log($"[{Mod.MOD_ID}] New: {dishChoice.Dish}");
+            Debug.Log($"[{Main.MOD_ID}] Rerolling individual dish. Current: {dishChoice.Dish}");
+            dishChoice.Dish = Main.loadedAvailableMenuOptions[Random.Range(0, Main.loadedAvailableMenuOptions.Count)];
+            Debug.Log($"[{Main.MOD_ID}] New: {dishChoice.Dish}");
             SetComponent(itemHolder.HeldItem, dishChoice);
         }
     }

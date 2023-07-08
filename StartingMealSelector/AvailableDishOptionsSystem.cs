@@ -1,12 +1,9 @@
 ﻿using Kitchen;
 using KitchenData;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Entities;
 using UnityEngine;
-using KitchenLib.Utils;
-using KitchenLib.References;
-using UnityEngine.Rendering.Universal.Internal;
-using System;
 
 namespace KitchenStartingMealSelector {
 
@@ -17,32 +14,37 @@ namespace KitchenStartingMealSelector {
         protected override void Initialise() {
             base.Initialise();
             dishUpgradesQuery = GetEntityQuery((ComponentType)typeof(CDishUpgrade));
-            Debug.Log($"[{Mod.MOD_ID}] AvailableDishOptionsSystem initialized.");
+            Debug.Log($"[{Main.MOD_ID}] AvailableDishOptionsSystem initialized.");
         }
 
         protected override void OnUpdate() {
-            if (!(Has<CSceneFirstFrame>() || Mod.refreshOptions)) {
+            if (!(Has<CSceneFirstFrame>() || Main.refreshOptions)) {
                 return;
             }
 
-            Debug.LogWarning($"[{Mod.MOD_ID}] Loading dish upgrades...");
+            Debug.Log($"[{Main.MOD_ID}] Loading dish upgrades...");
 
-            Mod.loadedAvailableMenuOptions.Clear();
-            Mod.loadedAvailableMenuOptionNames.Clear();
+            Main.loadedAvailableMenuOptions.Clear();
+            Main.loadedAvailableMenuOptionNames.Clear();
+            Main.availableMenuOptions.Clear();
 
-            addIdNamePair(-1, "Surprise me");
-            addIdNamePair(0, "Random");
             addAlwaysAvailableOption();
             addOptionsThatUserHasUnlocked();
-            addIdNamePair(DishReferences.NutRoastBase, "Nut Roast");
+            addIdNamePair(536093200, "Nut Roast");
+            Debug.Log(Main.availableMenuOptions.Keys.ToList());
+            Debug.Log(Main.availableMenuOptions.Values.ToList());
+            Main.availableMenuOptions = Main.availableMenuOptions.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            Main.availableMenuOptions = Main.availableMenuOptions.Prepend(new KeyValuePair<int, string>(0, "Random")).ToDictionary(x => x.Key, x => x.Value); ;
+            Main.availableMenuOptions = Main.availableMenuOptions.Prepend(new KeyValuePair<int, string>(-1, "Surprise me")).ToDictionary(x => x.Key, x => x.Value); ;
             
-            Debug.LogWarning($"[{Mod.MOD_ID}] Found dish upgrades: {string.Join(", ", Mod.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
-            Mod.refreshOptions = false;
+            Debug.Log($"[{Main.MOD_ID}] Found dish upgrades: {string.Join(", ", Main.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
+            Main.refreshOptions = false;
         }
 
         private void addIdNamePair(int id, string name) {
-            Mod.loadedAvailableMenuOptions.Add(id);
-            Mod.loadedAvailableMenuOptionNames.Add(name);
+            Main.loadedAvailableMenuOptions.Add(id);
+            Main.loadedAvailableMenuOptionNames.Add(name);
+            Main.availableMenuOptions.Add(id, name);
         }
 
         private void addAlwaysAvailableOption() {
@@ -58,20 +60,25 @@ namespace KitchenStartingMealSelector {
         }
 
         private void addDishOption(int dishId) {
-            if (Mod.loadedAvailableMenuOptions.Contains(dishId)) {
+            if (Main.loadedAvailableMenuOptions.Contains(dishId) || dishId == 0) {
                 return;
             }
 
-            Dish dish = (Dish)GDOUtils.GetExistingGDO(dishId);
-
-            if (dish == null) {
-                dish = (Dish)GDOUtils.GetCustomGameDataObject(dishId).GameDataObject;
-            }
+            Debug.Log("Looking up " + dishId);
+            Dish dish = getGdo(dishId);
 
             string dishName = dish != null ? dish.Name : dishId.ToString();
 
-            Mod.loadedAvailableMenuOptions.Add(dishId);
-            Mod.loadedAvailableMenuOptionNames.Add(dishName);
+            Main.loadedAvailableMenuOptions.Add(dishId);
+            Main.loadedAvailableMenuOptionNames.Add(dishName);
+            Main.availableMenuOptions.Add(dishId, dishName);
+        }
+
+        private Dish getGdo(int id) {
+            return GameData.Main.Get<GameDataObject>()
+                .Where(gdo => gdo.ID == id)
+                .Select(gdo => (Dish)gdo)
+                .First();
         }
     }
 }
