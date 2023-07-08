@@ -20,20 +20,20 @@ namespace KitchenStartingMealSelector {
             EntityContext entityContext = new EntityContext(EntityManager);
             Entity dishPedestal = entityContext.GetEntity<SDishPedestal>();
             foreach (var dish in items) {
-                if (dish != null) {
-                    CHeldBy heldBy;
-                    if (Require<CHeldBy>(dish, out heldBy)) {
-                        if (heldBy.Holder != dishPedestal) {
-                            if (Main.selectedStartingDish == -1) {
-                                Main.selectedStartingDish = Main.loadedAvailableMenuOptions[Random.Range(0, Main.loadedAvailableMenuOptions.Count)];
-                            } else {
-                                entityContext.Destroy(dish);
-                            }
-                        }
+                if (dish != null && isPaperNoLongerHeldByPedestal(dish, dishPedestal)) {
+                    if (Main.selectedStartingDish == -1) {
+                        Main.selectedStartingDish = Main.loadedAvailableMenuOptions[Random.Range(0, Main.loadedAvailableMenuOptions.Count)];
+                    } else {
+                        entityContext.Destroy(dish);
                     }
                 }
             }
             items.Dispose();
+        }
+
+        private bool isPaperNoLongerHeldByPedestal(Entity dish, Entity dishPedestal) {
+            CHeldBy heldBy;
+            return Require<CHeldBy>(dish, out heldBy) && heldBy.Holder != dishPedestal;
         }
     }
 }

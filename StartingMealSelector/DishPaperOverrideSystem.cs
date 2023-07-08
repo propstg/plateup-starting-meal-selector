@@ -75,7 +75,7 @@ namespace KitchenStartingMealSelector {
             foreach (var dish in items) {
                 if (dish != null) {
                     CDishChoice cDishChoice = EntityManager.GetComponentData<CDishChoice>(dish);
-                    if (cDishChoice.Reason != FixedDishReason.None) {
+                    if (cDishChoice.Reason != FixedDishReason.None || cDishChoice.Dish == 0) {
                         continue;
                     }
 
@@ -128,7 +128,7 @@ namespace KitchenStartingMealSelector {
         }
 
         private void createNewDishPaperInPedestal(EntityContext entityContext, Entity dishPedestal, int dishId) {
-            Entity smsPaper = EntityManager.CreateEntity((ComponentType) typeof (CCreateItem), (ComponentType) typeof (RebuildKitchen.CNonKitchen), (ComponentType) typeof (CHeldBy), (ComponentType)typeof(CStartingMealSelectorDish));
+            Entity smsPaper = EntityManager.CreateEntity((ComponentType) typeof (CCreateItem), (ComponentType) typeof (RebuildKitchen.CNonKitchen), (ComponentType) typeof (CHeldBy), (ComponentType) typeof (CStartingMealSelectorDish));
             entityContext.Set<CCreateItem>(smsPaper, (CCreateItem) AssetReference.DishPaper);
             entityContext.Set<CHeldBy>(smsPaper, (CHeldBy) dishPedestal);
             entityContext.Set<CItemHolder>(dishPedestal, (CItemHolder) smsPaper);

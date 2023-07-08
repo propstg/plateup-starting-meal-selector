@@ -64,7 +64,6 @@ namespace KitchenStartingMealSelector {
                 return;
             }
 
-            Debug.Log("Looking up " + dishId);
             Dish dish = getGdo(dishId);
 
             string dishName = dish != null ? dish.Name : dishId.ToString();

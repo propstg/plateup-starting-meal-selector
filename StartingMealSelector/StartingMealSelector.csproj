@@ -35,7 +35,7 @@
   <ItemGroup>
     <Compile Include="AvailableDishOptionsSystem.cs" />
     <Compile Include="CStartingMealSelectorDish.cs" />
-    <Compile Include="DoNotOverwhelmTheFranchiseKitchenSystem - Copy.cs" />
+    <Compile Include="DoNotOverwhelmTheFranchiseKitchenSystem.cs" />
     <Compile Include="DestroySmsDishWhenHeldSystem.cs" />
     <Compile Include="IndividualMealRerollSystem.cs" />
     <Compile Include="Menu.cs" />
