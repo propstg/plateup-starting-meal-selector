@@ -10,7 +10,7 @@ namespace KitchenStartingMealSelector {
 
         public const string MOD_ID = "blargle.StartingMealSelector";
         public const string MOD_NAME = "Starting Meal Selector";
-        public const string MOD_VERSION = "0.1.0";
+        public const string MOD_VERSION = "0.2.1";
 
         public static int selectedStartingDish = 0;
         public static bool randomizeOnce = false;
@@ -24,7 +24,9 @@ namespace KitchenStartingMealSelector {
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), MOD_ID);
         }
 
-        public void PreInject() { }
+        public void PreInject() { 
+            SmsPreferences.registerPreferences();
+        }
 
         public void PostInject() { }
     }

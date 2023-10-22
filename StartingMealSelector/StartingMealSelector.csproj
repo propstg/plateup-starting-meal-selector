@@ -33,6 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="SelectMealAtStartOfGameSystem.cs" />
+    <Compile Include="SmsPreferences.cs" />
     <Compile Include="AvailableDishOptionsSystem.cs" />
     <Compile Include="CStartingMealSelectorDish.cs" />
     <Compile Include="DoNotOverwhelmTheFranchiseKitchenSystem.cs" />
