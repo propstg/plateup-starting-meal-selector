@@ -22,9 +22,9 @@ namespace KitchenStartingMealSelector {
             Main.randomizeOnce = false;
             Main.selectedStartingDish = 0;
             
-            Debug.Log($"[{Main.MOD_ID}] Rerolling individual dish. Current: {dishChoice.Dish}");
+            Main.Log($"Rerolling individual dish. Current: {dishChoice.Dish}");
             dishChoice.Dish = Main.loadedAvailableMenuOptions[Random.Range(0, Main.loadedAvailableMenuOptions.Count)];
-            Debug.Log($"[{Main.MOD_ID}] New: {dishChoice.Dish}");
+            Main.Log($"New: {dishChoice.Dish}");
             SetComponent(itemHolder.HeldItem, dishChoice);
         }
     }

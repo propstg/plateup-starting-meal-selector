@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using HarmonyLib;
+using System.Runtime.CompilerServices;
 
 namespace KitchenStartingMealSelector {
 
@@ -10,7 +11,7 @@ namespace KitchenStartingMealSelector {
 
         public const string MOD_ID = "blargle.StartingMealSelector";
         public const string MOD_NAME = "Starting Meal Selector";
-        public const string MOD_VERSION = "0.2.1";
+        public static readonly string MOD_VERSION = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion.ToString();
 
         public static int selectedStartingDish = 0;
         public static bool randomizeOnce = false;
@@ -18,9 +19,12 @@ namespace KitchenStartingMealSelector {
         public static List<int> loadedAvailableMenuOptions = new List<int>();
         public static List<string> loadedAvailableMenuOptionNames = new List<string>();
         public static Dictionary<int, string> availableMenuOptions = new Dictionary<int, string>();
+        public static string selectedSeed = "";
+        public static int selectedSetting = 0;
+        public static Dictionary<int, string> availableSettingOptions = new Dictionary<int, string>();
 
         public void PostActivate(Mod mod) {
-            Debug.Log($"[{MOD_ID}] v{MOD_VERSION} initialized");
+            Log($"v{MOD_VERSION} initialized");
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), MOD_ID);
         }
 
@@ -29,5 +33,9 @@ namespace KitchenStartingMealSelector {
         }
 
         public void PostInject() { }
+
+        public static void Log(object message, [CallerFilePath] string callingFilePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string caller = null) {
+            Debug.Log($"[{MOD_ID}] [{caller}({callingFilePath}:{lineNumber})] {message}");
+        }
     }
 }

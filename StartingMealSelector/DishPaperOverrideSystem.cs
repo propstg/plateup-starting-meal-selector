@@ -14,7 +14,7 @@ namespace KitchenStartingMealSelector {
         protected override void Initialise() {
             base.Initialise();
             dishPaperQuery = GetEntityQuery(new QueryHelper().All(typeof(CDishChoice), typeof(CItem)));
-            Debug.Log($"[{Main.MOD_ID}] DishPaperChangerSystem initialized.");
+            Main.Log($"DishPaperChangerSystem initialized.");
         }
 
 

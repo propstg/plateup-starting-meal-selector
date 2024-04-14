@@ -39,7 +39,7 @@ namespace KitchenStartingMealSelector {
             startWithThisSelectedButton = AddButton("Always Start Game with This Dish", delegate {
                 SmsPreferences.setStartWithMeal(selectedOption);
                 clearStartingWithButton.SetSelectable(true);
-                startingGameWithElement.SetLabel($"Game will start with {Main.availableMenuOptions.GetValueOrDefault(selectedOption, "Unknown")} selected automatically.");
+                updateStartGameWithLabel(startingGameWithElement);
             });
             startWithThisSelectedButton.SetSelectable(false);
 
@@ -47,14 +47,10 @@ namespace KitchenStartingMealSelector {
             clearStartingWithButton = AddButton("Clear Start Game with Dish", delegate {
                 SmsPreferences.setStartWithMeal(0);
                 clearStartingWithButton.SetSelectable(false);
-                startingGameWithElement.SetLabel("Game will not start with any meal selected automatically");
+                updateStartGameWithLabel(startingGameWithElement);
             });
 
-            if (SmsPreferences.getStartWithMeal() == 0) {
-                startingGameWithElement.SetLabel("Game will not start with any meal selected automatically");
-            } else {
-                startingGameWithElement.SetLabel($"Game will start with {Main.availableMenuOptions.GetValueOrDefault(SmsPreferences.getStartWithMeal(), "Unknown")} selected automatically.");
-            }
+            addSeedSection();
 
             New<SpacerElement>();
             AddButton("Refresh Options", delegate {
@@ -68,7 +64,48 @@ namespace KitchenStartingMealSelector {
             New<SpacerElement>();
             AddButton(Localisation["MENU_BACK_SETTINGS"], delegate { RequestPreviousMenu(); });
 
+            updateStartGameWithLabel(startingGameWithElement);
             clearStartingWithButton.SetSelectable(SmsPreferences.getStartWithMeal() != 0);
+        }
+
+        private void addSeedSection() {
+            ButtonElement startWithThisSeedSelectedButton = null;
+            InfoBoxElement startingGameWithSeedElement = null;
+            ButtonElement clearStartingWithSeedButton = null;
+            startWithThisSeedSelectedButton = AddButton($"Always Start Game with Seed {Main.selectedSeed.ToUpper()} and setting {Main.availableSettingOptions.GetValueOrDefault(Main.selectedSetting, "Unknown")}", delegate {
+                SmsPreferences.setStartWithSeed(Main.selectedSeed);
+                SmsPreferences.setStartWithSetting(Main.selectedSetting);
+                clearStartingWithSeedButton.SetSelectable(true);
+                updateStartGameWithSeedLabel(startingGameWithSeedElement);
+            });
+            startWithThisSeedSelectedButton.SetSelectable(Main.selectedSeed != "");
+
+            startingGameWithSeedElement = AddInfo("");
+            clearStartingWithSeedButton = AddButton("Clear Start Game with Seed", delegate {
+                SmsPreferences.setStartWithSeed("");
+                clearStartingWithSeedButton.SetSelectable(false);
+                updateStartGameWithSeedLabel(startingGameWithSeedElement);
+            });
+
+            updateStartGameWithSeedLabel(startingGameWithSeedElement);
+            clearStartingWithSeedButton.SetSelectable(SmsPreferences.getStartWithSeed() != "");
+        }
+
+
+        private void updateStartGameWithLabel(InfoBoxElement label) {
+            if (SmsPreferences.getStartWithMeal() == 0) {
+                label.SetLabel("Game will not start with any meal selected automatically");
+            } else {
+                label.SetLabel($"Game will start with {Main.availableMenuOptions.GetValueOrDefault(SmsPreferences.getStartWithMeal(), "Unknown")} selected automatically.");
+            }
+        }
+
+        private void updateStartGameWithSeedLabel(InfoBoxElement label) {
+            if (SmsPreferences.getStartWithSeed() == "") {
+                label.SetLabel("Game will not start with any seed selected automatically");
+            } else {
+                label.SetLabel($"Game will start with {SmsPreferences.getStartWithSeed().ToUpper()} and setting {Main.availableSettingOptions.GetValueOrDefault(SmsPreferences.getStartWithSetting(), "Unknown")} selected automatically.");
+            }
         }
     }
 

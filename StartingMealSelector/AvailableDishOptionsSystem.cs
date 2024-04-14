@@ -14,7 +14,7 @@ namespace KitchenStartingMealSelector {
         protected override void Initialise() {
             base.Initialise();
             dishUpgradesQuery = GetEntityQuery((ComponentType)typeof(CDishUpgrade));
-            Debug.Log($"[{Main.MOD_ID}] AvailableDishOptionsSystem initialized.");
+            Main.Log($"AvailableDishOptionsSystem initialized.");
         }
 
         protected override void OnUpdate() {
@@ -22,7 +22,7 @@ namespace KitchenStartingMealSelector {
                 return;
             }
 
-            Debug.Log($"[{Main.MOD_ID}] Loading dish upgrades...");
+            Main.Log($"Loading dish upgrades...");
 
             Main.loadedAvailableMenuOptions.Clear();
             Main.loadedAvailableMenuOptionNames.Clear();
@@ -31,13 +31,13 @@ namespace KitchenStartingMealSelector {
             addAlwaysAvailableOption();
             addOptionsThatUserHasUnlocked();
             addIdNamePair(536093200, "Nut Roast");
-            Debug.Log(Main.availableMenuOptions.Keys.ToList());
-            Debug.Log(Main.availableMenuOptions.Values.ToList());
+            Main.Log(Main.availableMenuOptions.Keys.ToList());
+            Main.Log(Main.availableMenuOptions.Values.ToList());
             Main.availableMenuOptions = Main.availableMenuOptions.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             Main.availableMenuOptions = Main.availableMenuOptions.Prepend(new KeyValuePair<int, string>(0, "Random")).ToDictionary(x => x.Key, x => x.Value); ;
             Main.availableMenuOptions = Main.availableMenuOptions.Prepend(new KeyValuePair<int, string>(-1, "Surprise me")).ToDictionary(x => x.Key, x => x.Value); ;
             
-            Debug.Log($"[{Main.MOD_ID}] Found dish upgrades: {string.Join(", ", Main.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
+            Main.Log($"Found dish upgrades: {string.Join(", ", Main.loadedAvailableMenuOptions.Select(item => item.ToString()))}");
             Main.refreshOptions = false;
         }
 

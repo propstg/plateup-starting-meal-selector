@@ -1,59 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{38668626-DE5E-4C65-8192-ECA4C9ABCD8C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StartingMealSelector</RootNamespace>
-    <AssemblyName>StartingMealSelector</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="SelectMealAtStartOfGameSystem.cs" />
-    <Compile Include="SmsPreferences.cs" />
-    <Compile Include="AvailableDishOptionsSystem.cs" />
-    <Compile Include="CStartingMealSelectorDish.cs" />
-    <Compile Include="DoNotOverwhelmTheFranchiseKitchenSystem.cs" />
-    <Compile Include="DestroySmsDishWhenHeldSystem.cs" />
-    <Compile Include="IndividualMealRerollSystem.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="Main.cs" />
-    <Compile Include="DishPaperOverrideSystem.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets" Condition="Exists('..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Yariazen.PlateUp.ModBuildUtilities.1.10.21\build\Yariazen.PlateUp.ModBuildUtilities.targets'))" />
-  </Target>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<LangVersion>8</LangVersion>
+		<PathMap>$(MSBuildThisFileDirectory)=./</PathMap>
+		<VersionPrefix>0.3.0</VersionPrefix>
+	</PropertyGroup>
+  
+	<ItemGroup>
+		<PackageReference Include="Yariazen.PlateUp.ModBuildUtilities" Version="1.10.21" />
+	</ItemGroup>
 </Project>
