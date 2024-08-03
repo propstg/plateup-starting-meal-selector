@@ -8,6 +8,8 @@ namespace StartingMealSelector.maps {
 
     public class SelectMapAtStartOfGameSystem : FranchiseFirstFrameSystem, IModSystem {
 
+        public static bool isIntegratedHqInstalled => ModPreload.Mods.Any(mod => mod.Name == "Integrated HQ");
+
         protected override void Initialise() {
             base.Initialise();
         }
@@ -22,6 +24,11 @@ namespace StartingMealSelector.maps {
                 seededRunInfo.IsSeedOverride = true;
                 seededRunInfo.FixedSeed = new Seed(seed);
                 EntityManager.SetComponentData(seededRunInfoEntity, seededRunInfo);
+
+                if (isIntegratedHqInstalled) {
+                    Main.Log("Integrated HQ is installed. Skipping loading setting.");
+                    return;
+                }
 
                 using var settingQuery = EntityManager.CreateEntityQuery((ComponentType)typeof(CSettingSelector));
                 var settingEntity = settingQuery.First();
