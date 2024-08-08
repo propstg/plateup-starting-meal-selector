@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace KitchenStartingMealSelector {
 
-    public class StartingMealSelectorMenu : Menu<PauseMenuAction> {
+    public class StartingMealSelectorMenu : Menu<MenuAction> {
 
         private int selectedOption = 0;
 
@@ -69,6 +69,11 @@ namespace KitchenStartingMealSelector {
         }
 
         private void addSeedSection() {
+            if (Main.isIntegratedHqInstalled) {
+                AddInfo("Saving seeds is disabled when Integrated HQ is installed, due to a game-crashing incompatibility.");
+                return;
+            }
+
             ButtonElement startWithThisSeedSelectedButton = null;
             InfoBoxElement startingGameWithSeedElement = null;
             ButtonElement clearStartingWithSeedButton = null;

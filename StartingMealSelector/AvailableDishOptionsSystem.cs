@@ -31,6 +31,7 @@ namespace KitchenStartingMealSelector {
             addAlwaysAvailableOption();
             addOptionsThatUserHasUnlocked();
             addIdNamePair(536093200, "Nut Roast");
+            addIdNamePair(373996608, "Ice Cream");
             Main.Log(Main.availableMenuOptions.Keys.ToList());
             Main.Log(Main.availableMenuOptions.Values.ToList());
             Main.availableMenuOptions = Main.availableMenuOptions.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);

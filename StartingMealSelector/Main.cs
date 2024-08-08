@@ -4,6 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using HarmonyLib;
 using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace KitchenStartingMealSelector {
 
@@ -22,6 +23,8 @@ namespace KitchenStartingMealSelector {
         public static string selectedSeed = "";
         public static int selectedSetting = 0;
         public static Dictionary<int, string> availableSettingOptions = new Dictionary<int, string>();
+
+        public static bool isIntegratedHqInstalled => ModPreload.Mods.Any(mod => mod.Name == "Integrated HQ");
 
         public void PostActivate(Mod mod) {
             Log($"v{MOD_VERSION} initialized");
