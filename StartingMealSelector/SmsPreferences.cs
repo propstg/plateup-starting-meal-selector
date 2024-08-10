@@ -9,6 +9,7 @@ namespace KitchenStartingMealSelector {
         public static readonly Pref StartWithMeal = new Pref(Main.MOD_ID, nameof(StartWithMeal));
         public static readonly Pref StartWithSeed = new Pref(Main.MOD_ID, nameof(StartWithSeed));
         public static readonly Pref StartWithSetting = new Pref(Main.MOD_ID, nameof(StartWithSetting));
+        public static readonly Pref MenuSize = new Pref(Main.MOD_ID, nameof(MenuSize));
 
         public static bool preferencesLoaded = false;
 
@@ -18,6 +19,7 @@ namespace KitchenStartingMealSelector {
                 Preferences.AddPreference<int>(new IntPreference(StartWithMeal, 0));
                 Preferences.AddPreference<string>(new StringPreference(StartWithSeed, ""));
                 Preferences.AddPreference<int>(new IntPreference(StartWithSetting, 0));
+                Preferences.AddPreference<float>(new FloatPreference(MenuSize, 1f));
                 Preferences.Load();
             }
         }
@@ -44,6 +46,14 @@ namespace KitchenStartingMealSelector {
 
         public static void setStartWithSetting(int value) {
             Preferences.Set<int>(StartWithSetting, value);
+        }
+
+        public static float getMenuSize() {
+            return Preferences.Get<float>(MenuSize);
+        }
+
+        public static void setMenuSize(float value) {
+            Preferences.Set<float>(MenuSize, value);
         }
     }
 
