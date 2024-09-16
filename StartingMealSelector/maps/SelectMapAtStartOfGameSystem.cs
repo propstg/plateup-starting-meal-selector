@@ -6,13 +6,20 @@ using Unity.Entities;
 
 namespace StartingMealSelector.maps {
 
-    public class SelectMapAtStartOfGameSystem : FranchiseFirstFrameSystem, IModSystem {
+    public class SelectMapAtStartOfGameSystem : FranchiseSystem, IModSystem {
 
-        protected override void Initialise() {
-            base.Initialise();
-        }
+        static bool readyToRunOnce = false;
 
         protected override void OnUpdate() {
+            if (Has<CSceneFirstFrame>()) {
+                readyToRunOnce = true;
+                return;
+            }
+
+            if (!readyToRunOnce) {
+                return;
+            }
+
             if (Main.isIntegratedHqInstalled) {
                 Main.Log("Integrated HQ is installed. Skipping loading seed.");
                 return;
@@ -28,12 +35,14 @@ namespace StartingMealSelector.maps {
                 seededRunInfo.FixedSeed = new Seed(seed);
                 EntityManager.SetComponentData(seededRunInfoEntity, seededRunInfo);
 
-                using var settingQuery = EntityManager.CreateEntityQuery((ComponentType)typeof(CSettingSelector));
+                using var settingQuery = EntityManager.CreateEntityQuery(typeof(CSettingSelector));
                 var settingEntity = settingQuery.First();
                 var settingComponent = EntityManager.GetComponentData<CSettingSelector>(settingEntity);
                 settingComponent.SettingID = SmsPreferences.getStartWithSetting();
                 EntityManager.SetComponentData(settingEntity, settingComponent);
             }
+
+            readyToRunOnce = false;
         }
     }
 }

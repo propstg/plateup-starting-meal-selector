@@ -1,26 +1,33 @@
 ﻿using Kitchen;
 using KitchenData;
+using KitchenMods;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Entities;
-using UnityEngine;
 
 namespace KitchenStartingMealSelector {
 
-    public class AvailableDishOptionsSystem : GameSystemBase {
+    public class AvailableDishOptionsSystem : FranchiseSystem, IModSystem {
 
-        private EntityQuery dishUpgradesQuery;
-
-        protected override void Initialise() {
-            base.Initialise();
-            dishUpgradesQuery = GetEntityQuery((ComponentType)typeof(CDishUpgrade));
-            Main.Log($"AvailableDishOptionsSystem initialized.");
-        }
+        private static bool readyToRunOnce = false;
 
         protected override void OnUpdate() {
-            if (!(Has<CSceneFirstFrame>() || Main.refreshOptions)) {
+            bool firstFrame = Has<CSceneFirstFrame>();
+            if (Has<CSceneFirstFrame>() || Main.refreshOptions) {
+                readyToRunOnce = true;
                 return;
             }
+
+            if (!readyToRunOnce) {
+                return;
+            }
+
+            using var dishUpgradesQuery = EntityManager.CreateEntityQuery((ComponentType)typeof(CDishUpgrade));
+            if (dishUpgradesQuery.CalculateEntityCount() == 0) {
+                Main.Log("No CDishUpgrades found");
+                return;
+            }
+            readyToRunOnce = false;
 
             Main.Log($"Loading dish upgrades...");
 
@@ -29,7 +36,7 @@ namespace KitchenStartingMealSelector {
             Main.availableMenuOptions.Clear();
 
             addAlwaysAvailableOption();
-            addOptionsThatUserHasUnlocked();
+            addOptionsThatUserHasUnlocked(dishUpgradesQuery);
             addIdNamePair(536093200, "Nut Roast");
             addIdNamePair(373996608, "Ice Cream");
             Main.Log(Main.availableMenuOptions.Keys.ToList());
@@ -52,7 +59,7 @@ namespace KitchenStartingMealSelector {
             addDishOption(AssetReference.AlwaysAvailableDish);
         }
         
-        private void addOptionsThatUserHasUnlocked() {
+        private void addOptionsThatUserHasUnlocked(EntityQuery dishUpgradesQuery) {
             dishUpgradesQuery
                 .ToComponentDataArray<CDishUpgrade>(Unity.Collections.Allocator.Temp)
                 .ToList<CDishUpgrade>()
@@ -65,9 +72,11 @@ namespace KitchenStartingMealSelector {
                 return;
             }
 
+            Main.Log($"Attempting to load {dishId}");
             Dish dish = getGdo(dishId);
 
             string dishName = dish != null ? dish.Name : dishId.ToString();
+            Main.Log($"Loaded {dishId}, {dishName}");
 
             Main.loadedAvailableMenuOptions.Add(dishId);
             Main.loadedAvailableMenuOptionNames.Add(dishName);

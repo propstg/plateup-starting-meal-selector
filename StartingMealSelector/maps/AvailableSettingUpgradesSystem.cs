@@ -8,15 +8,23 @@ namespace KitchenStartingMealSelector.maps {
 
     public class AvailableSettingUpgradesSystem : FranchiseFirstFrameSystem, IModSystem {
 
-        private EntityQuery settingUpgradesQuery;
-
-        protected override void Initialise() {
-            base.Initialise();
-            settingUpgradesQuery = GetEntityQuery((ComponentType)typeof(CSettingUpgrade));
-            Main.Log($"AvailableSettingUpgradesSystem initialized.");
-        }
+        private static bool readyToRunOnce = false;
 
         protected override void OnUpdate() {
+            if (Has<CSceneFirstFrame>()) {
+                readyToRunOnce = true;
+                return;
+            } else if (!readyToRunOnce) {
+                return;
+            }
+
+            using var settingUpgradesQuery= EntityManager.CreateEntityQuery((ComponentType)typeof(CSettingUpgrade));
+            if (settingUpgradesQuery.CalculateEntityCount() == 0) {
+                Main.Log("No CSettingUpgrades found");
+                return;
+            }
+            readyToRunOnce = false;
+
             Main.Log($"Loading setting upgrades...");
             Main.availableSettingOptions.Clear();
 
