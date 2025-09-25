@@ -72,5 +72,13 @@ namespace KitchenStartingMealSelector {
                 Value = Default;
             }
         }
+
+        public override string SaveAsString() {
+            return Value;
+        }
+
+        public override void LoadFromString(string value) {
+            Value = value;
+        }
     }
 }

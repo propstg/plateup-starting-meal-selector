@@ -28,18 +28,29 @@ namespace StartingMealSelector.maps {
             var seed = SmsPreferences.getStartWithSeed();
 
             if (seed != "") {
+                Main.Log($"Attempting to set seed to ${seed} and setting to ${SmsPreferences.getStartWithSetting()}");
                 using var seedQuery = EntityManager.CreateEntityQuery((ComponentType)typeof(CSeededRunInfo));
-                var seededRunInfoEntity = seedQuery.First();
-                var seededRunInfo = EntityManager.GetComponentData<CSeededRunInfo>(seededRunInfoEntity);
-                seededRunInfo.IsSeedOverride = true;
-                seededRunInfo.FixedSeed = new Seed(seed);
-                EntityManager.SetComponentData(seededRunInfoEntity, seededRunInfo);
+                if (!seedQuery.IsEmpty) {
+                    var seededRunInfoEntity = seedQuery.First();
+                    var seededRunInfo = EntityManager.GetComponentData<CSeededRunInfo>(seededRunInfoEntity);
+                    seededRunInfo.IsSeedOverride = true;
+                    seededRunInfo.FixedSeed = new Seed(seed);
+                    EntityManager.SetComponentData(seededRunInfoEntity, seededRunInfo);
+                    Main.Log("Seed set.");
+                } else {
+                    Main.Log("Unable to set seed, because seedQuery returned no results");
+                }
 
                 using var settingQuery = EntityManager.CreateEntityQuery(typeof(CSettingSelector));
-                var settingEntity = settingQuery.First();
-                var settingComponent = EntityManager.GetComponentData<CSettingSelector>(settingEntity);
-                settingComponent.SettingID = SmsPreferences.getStartWithSetting();
-                EntityManager.SetComponentData(settingEntity, settingComponent);
+                if (!settingQuery.IsEmpty) {
+                    var settingEntity = settingQuery.First();
+                    var settingComponent = EntityManager.GetComponentData<CSettingSelector>(settingEntity);
+                    settingComponent.SettingID = SmsPreferences.getStartWithSetting();
+                    EntityManager.SetComponentData(settingEntity, settingComponent);
+                    Main.Log("Setting set.");
+                } else {
+                    Main.Log("Unable to set setting, because settingQuery returned no results");
+                }
             }
 
             readyToRunOnce = false;

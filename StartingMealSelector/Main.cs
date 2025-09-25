@@ -4,6 +4,7 @@ using System.Reflection;
 using HarmonyLib;
 using System.Runtime.CompilerServices;
 using System.Linq;
+using UnityEngine;
 
 namespace KitchenStartingMealSelector {
 

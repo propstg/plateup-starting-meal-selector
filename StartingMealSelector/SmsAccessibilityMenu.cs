@@ -4,6 +4,8 @@ using Kitchen;
 using HarmonyLib;
 using System.Reflection;
 using System.Collections.Generic;
+using TMPro;
+using KitchenData;
 
 namespace KitchenStartingMealSelector {
 
@@ -46,9 +48,34 @@ namespace KitchenStartingMealSelector {
     [HarmonyPatch(typeof(DishSelectionIndicator), "SetNewMenu")]
     class DishSelectionIndicator_SetNewMenu_Patch {
 
-        public static void Postfix(Transform ___Container) {
+        public static void Postfix(Transform ___Container, TextMeshPro ___Title, GridMenu ___GridMenu) {
             float menuSize = SmsPreferences.getMenuSize();
             ___Container.localScale = new Vector3(menuSize, menuSize, 1f);
+            ___Title.transform.parent.gameObject.SetActive(true);
+            ___Title.transform.parent.localPosition = new Vector3(1f, 0.1f, 0);
+            ___Title.SetText("");
+        }
+    }
+
+
+    [HarmonyPatch(typeof(DishSelectionIndicator), "TakeInput")]
+    class DishSelectionIndicator_HasStateUpdate_Patch {
+
+        public static void Postfix(GridMenu ___GridMenu, TextMeshPro ___Title) {
+            var cast = ((GenericPaginatedGridMenu)___GridMenu);
+            var selected = cast.SelectedIndex();
+            var offset = cast.CurrentIndex;
+
+            var text = "";
+            if (selected == 0) {
+                text = "Prev";
+            } else if (selected == 5) {
+                text = "Next";
+            } else {
+                var actualIndex = offset + selected - 1;
+                text = ((GridItemDish)cast.Items[actualIndex]).Dish.Name;
+            }
+            ___Title.SetText(text);
         }
     }
 }

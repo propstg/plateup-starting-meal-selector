@@ -6,7 +6,7 @@ using Unity.Entities;
 
 namespace KitchenStartingMealSelector.maps {
 
-    public class AvailableSettingUpgradesSystem : FranchiseFirstFrameSystem, IModSystem {
+    public class AvailableSettingUpgradesSystem : FranchiseSystem, IModSystem {
 
         private static bool readyToRunOnce = false;
 
